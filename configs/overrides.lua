@@ -5,6 +5,8 @@ M.treesitter = {
     -- defaults
     "vim",
     "lua",
+    -- bash
+    "bash",
     -- webdev
     "html",
     "css",
@@ -30,13 +32,14 @@ M.treesitter = {
 
 M.mason = {
   ensure_installed = {
-    -- lua stuff
-    "lua-language-server",
-    "stylua",
-    -- config stuff
-    "jsonls",
-    "taplo",
-    "yamlls",
+    "lua-language-server", --lua language-server
+    "stylua", -- lua formatter
+    "bashls", -- bash language-server
+    "shfmt", -- bash formatter
+    "shellcheck", --bash linter
+    "jsonls", --json language-server
+    "taplo", -- toml language-server
+    "yamlls", -- yaml language-server
 
     -- web dev stuff
     "typescript-language-server",
