@@ -15,6 +15,12 @@ local plugins = {
           require "custom.configs.null-ls"
         end,
       },
+      {
+        "ray-x/lsp_signature.nvim",
+        opts = {
+          hint_enable = false, -- disable hints as it will crash in some terminal
+        },
+      },
     },
     config = function()
       require "plugins.configs.lspconfig"
@@ -23,20 +29,9 @@ local plugins = {
   },
 
   -- override plugin configs
-  {
-    "williamboman/mason.nvim",
-    opts = overrides.mason,
-  },
-
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = overrides.treesitter,
-  },
-
-  {
-    "nvim-tree/nvim-tree.lua",
-    opts = overrides.nvimtree,
-  },
+  { "williamboman/mason.nvim", opts = overrides.mason },
+  { "nvim-treesitter/nvim-treesitter", opts = overrides.treesitter },
+  { "nvim-tree/nvim-tree.lua", opts = overrides.nvimtree },
 
   -- Install a plugin
   {
@@ -65,6 +60,33 @@ local plugins = {
     opts = {},
   },
   { "chrisgrieser/nvim-spider", opts = { skipInsignificantPunctuation = true } },
+  { "iamcco/markdown-preview.nvim" },
+  {
+    "Zeioth/compiler.nvim",
+    dependencies = {
+      {
+        "stevearc/overseer.nvim",
+        opts = {
+          task_list = { -- this refers to the window that shows the result
+            direction = "bottom",
+            min_height = 25,
+            max_height = 25,
+            default_detail = 1,
+            bindings = {
+              ["q"] = function()
+                vim.cmd "OverseerClose"
+              end,
+            },
+          },
+        },
+        config = function(_, opts)
+          require("overseer").setup(opts)
+        end,
+      },
+    },
+    cmd = { "CompilerOpen", "CompilerToggleResults" },
+    opts = {},
+  },
 }
 
 return plugins

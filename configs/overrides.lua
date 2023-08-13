@@ -5,53 +5,53 @@ M.treesitter = {
     -- defaults
     "vim",
     "lua",
-    -- bash
     "bash",
+    -- config
+    "json",
+    "jsonc",
+    "toml",
+    "yaml",
     -- webdev
     "html",
     "css",
     "javascript",
     "typescript",
     "tsx",
-    -- config
-    "json",
-    "jsonc",
-    "toml",
-    "yaml",
-
     "markdown",
     "markdown_inline",
+    "python",
   },
   indent = {
     enable = true,
-    -- disable = {
-    --   "python"
-    -- },
+    disable = {
+      -- "python",
+    },
   },
 }
 
 M.mason = {
   ensure_installed = {
+    -- language-server
     "lua-language-server", --lua language-server
-    "stylua", -- lua formatter
-    "bashls", -- bash language-server
-    "shfmt", -- bash formatter
-    "shellcheck", --bash linter
-    "jsonls", --json language-server
+    "bash-language-server", -- bash language-server
+    "json-lsp", --json language-server
     "taplo", -- toml language-server
-    "yamlls", -- yaml language-server
-
-    -- web dev stuff
-    "typescript-language-server",
-    "html-lsp",
-    "css-lsp",
-    "prettier",
-
-    -- python
+    "yaml-language-server", -- yaml language-server
+    "html-lsp", -- html
+    "css-lsp", -- css
+    "typescript-language-server", -- ts
+    "pyright", -- python
+    -- formatter
+    "stylua", -- lua
+    "shfmt", -- bash
+    "prettier", -- webdev
+    "black",
+    "isort", -- python
+    --linter
+    "shellcheck", --bash
+    "ruff-lsp",
     "pyright",
-    "ruff",
     "mypy",
-    "yapf",
   },
 }
 
