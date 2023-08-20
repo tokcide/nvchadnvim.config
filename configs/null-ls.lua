@@ -11,13 +11,10 @@ local sources = {
   b.formatting.prettier.with { extra_filetypes = { "toml" } }, -- so prettier works only on these filetypes
   -- python
   b.diagnostics.mypy.with {
-    extra_args = function(params)
+    extra_args = function()
       local virtual = os.getenv "VIRTUAL_ENV" or os.getenv "CONDA_DEFAULT_ENV" or "/usr"
       return { "--python-executable", virtual .. "/bin/python" }
     end,
-    -- cwd = function(_)
-    --   return vim.fn.getcwd()
-    -- end,
   },
   b.diagnostics.ruff,
   b.formatting.black,

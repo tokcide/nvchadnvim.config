@@ -45,13 +45,19 @@ M.mason = {
     "stylua", -- lua
     "shfmt", -- bash
     "prettier", -- webdev
-    "black",
-    "isort", -- python
+    -- "black",
+    -- "isort", -- python
     --linter
     "shellcheck", --bash
     "ruff-lsp",
     "pyright",
-    "mypy",
+    -- "mypy",
+  },
+}
+
+M.mason_lspconfig = { -- uses lspconfig server names
+  ensure_installed = {
+    "rust_analyzer",
   },
 }
 

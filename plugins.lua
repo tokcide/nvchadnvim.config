@@ -18,13 +18,25 @@ local plugins = {
       {
         "ray-x/lsp_signature.nvim",
         opts = {
-          hint_enable = false, -- disable hints as it will crash in some terminal
+          hint_enable = true, -- disable hints as it will crash in some terminal
+          bind = true, -- This is mandatory, otherwise border config won't get registered.
+          handler_opts = {
+            border = "rounded",
+          },
         },
+      },
+      {
+        "williamboman/mason-lspconfig.nvim",
+        opts = {},
+        config = function(_)
+          local C = require "custom.configs.mason-lspconfig"
+          require("mason-lspconfig").setup(C)
+        end,
       },
     },
     config = function()
       require "plugins.configs.lspconfig"
-      require "custom.configs.lspconfig"
+      -- require "custom.configs.lspconfig"
     end, -- Override to setup mason-lspconfig
   },
 
@@ -43,10 +55,10 @@ local plugins = {
   },
 
   -- To make a plugin not be loaded
-  -- {
-  --   "NvChad/nvim-colorizer.lua",
-  --   enabled = false
-  -- },
+  {
+    "NvChad/nvim-colorizer.lua",
+    enabled = false,
+  },
 
   -- All NvChad plugins are lazy-loaded by default
   -- For a plugin to be loaded, you will need to set either `ft`, `cmd`, `keys`, `event`, or set `lazy = false`
@@ -61,31 +73,45 @@ local plugins = {
   },
   { "chrisgrieser/nvim-spider", opts = { skipInsignificantPunctuation = true } },
   { "iamcco/markdown-preview.nvim" },
+  -- {
+  --   "Zeioth/compiler.nvim",
+  --   dependencies = {
+  --     {
+  --       "stevearc/overseer.nvim",
+  --       opts = {
+  --         task_list = { -- this refers to the window that shows the result
+  --           direction = "bottom",
+  --           min_height = 25,
+  --           max_height = 25,
+  --           default_detail = 1,
+  --           bindings = {
+  --             ["q"] = function()
+  --               vim.cmd "OverseerClose"
+  --             end,
+  --           },
+  --         },
+  --       },
+  --       config = function(_, opts)
+  --         require("overseer").setup(opts)
+  --       end,
+  --     },
+  --   },
+  --   cmd = { "CompilerOpen", "CompilerToggleResults" },
+  --   opts = {},
+  -- },
   {
-    "Zeioth/compiler.nvim",
+    "nvimdev/lspsaga.nvim",
+    event = "LspAttach",
     dependencies = {
-      {
-        "stevearc/overseer.nvim",
-        opts = {
-          task_list = { -- this refers to the window that shows the result
-            direction = "bottom",
-            min_height = 25,
-            max_height = 25,
-            default_detail = 1,
-            bindings = {
-              ["q"] = function()
-                vim.cmd "OverseerClose"
-              end,
-            },
-          },
-        },
-        config = function(_, opts)
-          require("overseer").setup(opts)
-        end,
-      },
+      "nvim-treesitter/nvim-treesitter", -- optional
+      "nvim-tree/nvim-web-devicons", -- optional
     },
-    cmd = { "CompilerOpen", "CompilerToggleResults" },
-    opts = {},
+    opts = {
+      breadcrumbs = { enable = false, folder_level = 2 },
+    },
+    config = function(_, opts)
+      require("lspsaga").setup(opts)
+    end,
   },
 }
 
