@@ -25,26 +25,51 @@ local plugins = {
           },
         },
       },
-      {
-        "williamboman/mason-lspconfig.nvim",
-        opts = {},
-        config = function(_)
-          local C = require "custom.configs.mason-lspconfig"
-          require("mason-lspconfig").setup(C)
-        end,
-      },
     },
     config = function()
       require "plugins.configs.lspconfig"
-      -- require "custom.configs.lspconfig"
     end, -- Override to setup mason-lspconfig
+  },
+  {
+    "jay-babu/mason-null-ls.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "williamboman/mason.nvim",
+      "jose-elias-alvarez/null-ls.nvim",
+    },
+    config = function()
+      local C = require "custom.configs.msn-null-ls"
+      require("mason-null-ls").setup(C)
+    end,
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "williamboman/mason.nvim",
+      "neovim/nvim-lspconfig",
+    },
+    config = function()
+      local C = require "custom.configs.msn-lspconfig"
+      require("mason-lspconfig").setup(C)
+    end,
   },
 
   -- override plugin configs
-  { "williamboman/mason.nvim", opts = overrides.mason },
+  -- { "williamboman/mason.nvim", opts = overrides.mason },
   { "nvim-treesitter/nvim-treesitter", opts = overrides.treesitter },
+
   { "nvim-tree/nvim-tree.lua", opts = overrides.nvimtree },
 
+  {
+    "nvim-tree/nvim-web-devicons",
+    opts = {
+      strict = true,
+      override_by_filename = {
+        [".eslintignore"] = "eslintrc",
+      },
+    },
+  },
   -- Install a plugin
   {
     "max397574/better-escape.nvim",
