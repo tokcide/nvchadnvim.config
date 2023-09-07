@@ -2,6 +2,9 @@
 local M = {}
 
 M.ui = {
+  theme = "catppuccin",
+  theme_toggle = { "catppuccin", "one_light" },
+
   -- To find any highlight groups: "<cmd> Telescope highlights"
   -- Each highlight group can take a table with variables fg, bg, bold, italic, etc
   -- base30 variable names can also be used as colors
@@ -16,9 +19,6 @@ M.ui = {
     },
   },
 
-  theme = "catppuccin",
-  theme_toggle = { "catppuccin", "one_light" },
-
   -- https://github.com/NvChad/base46/tree/v2.0/lua/base46/extended_integrations
   extended_integrations = { "notify", "alpha" }, -- these aren't compiled by default, ex: "alpha", "notify"
 
@@ -30,20 +30,16 @@ M.ui = {
     selected_item_bg = "simple", -- colored / simple
   },
 
-  nvdash = {
-    load_on_startup = true,
-  },
-
   cheatsheet = {
     theme = "grid",
   },
 
   statusline = {
-    theme = "vscode_colored", -- default/vscode/vscode_colored/minimal
+    theme = "minimal", -- default/vscode/vscode_colored/minimal
 
     -- default/round/block/arrow (separators work only for "default" statusline theme;
     -- round and block will work for the minimal theme only)
-    separator_style = "default",
+    separator_style = "round",
     overriden_modules = nil,
   },
 

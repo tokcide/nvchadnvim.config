@@ -33,10 +33,10 @@ local plugins = {
   {
     "jay-babu/mason-null-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "williamboman/mason.nvim",
-      "jose-elias-alvarez/null-ls.nvim",
-    },
+    -- dependencies = {
+    --   "williamboman/mason.nvim",
+    --   "jose-elias-alvarez/null-ls.nvim",
+    -- },
     config = function()
       local C = require "custom.configs.msn-null-ls"
       require("mason-null-ls").setup(C)
@@ -45,10 +45,10 @@ local plugins = {
   {
     "williamboman/mason-lspconfig.nvim",
     event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "williamboman/mason.nvim",
-      "neovim/nvim-lspconfig",
-    },
+    -- dependencies = {
+    --   "williamboman/mason.nvim",
+    --   "neovim/nvim-lspconfig",
+    -- },
     config = function()
       local C = require "custom.configs.msn-lspconfig"
       require("mason-lspconfig").setup(C)

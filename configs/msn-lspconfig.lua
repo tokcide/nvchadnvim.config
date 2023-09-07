@@ -20,6 +20,7 @@ return { -- uses lspconfig server names
   -- This setting has no relation with the `automatic_installation` setting.
   ---@type string[]
   ensure_installed = {
+    "lua_ls",
     -- bash
     "bashls",
     -- config
@@ -41,34 +42,36 @@ return { -- uses lspconfig server names
   ---@type table<string, fun(server_name: string)>?
   handlers = {
     function(server_name)
-      lspconfig[server_name].setup {
-        on_attach = on_attach,
-        capabilities = capabilities,
-      }
+      if server_name ~= "lua_ls" then
+        lspconfig[server_name].setup {
+          on_attach = on_attach,
+          capabilities = capabilities,
+        }
+      end
     end,
-    ["lua_ls"] = function()
-      lspconfig.lua_ls.setup {
-        on_attach = on_attach,
-        capabilities = capabilities,
-        settings = {
-          Lua = {
-            diagnostics = {
-              globals = { "vim" },
-            },
-          },
-          workspace = {
-            library = {
-              [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-              [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
-              [vim.fn.stdpath "data" .. "/lazy/ui/nvchad_types"] = true,
-              [vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy"] = true,
-            },
-            maxPreload = 100000,
-            preloadFileSize = 10000,
-          },
-        },
-      }
-    end,
+    -- ["lua_ls"] = function()
+    --   lspconfig.lua_ls.setup {
+    --     on_attach = on_attach,
+    --     capabilities = capabilities,
+    --     settings = {
+    --       Lua = {
+    --         diagnostics = {
+    --           globals = { "vim" },
+    --         },
+    --       },
+    --       workspace = {
+    --         library = {
+    --           [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+    --           [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+    --           [vim.fn.stdpath "data" .. "/lazy/ui/nvchad_types"] = true,
+    --           [vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy"] = true,
+    --         },
+    --         maxPreload = 100000,
+    --         preloadFileSize = 10000,
+    --       },
+    --     },
+    --   }
+    -- end,
     ["tsserver"] = function()
       lspconfig.tsserver.setup {
         on_attach = on_attach,
