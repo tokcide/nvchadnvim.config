@@ -1,6 +1,4 @@
 local null_ls = require "null-ls"
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-
 local b = null_ls.builtins
 
 local sources = {
@@ -30,12 +28,12 @@ local sources = {
   -- webdev
   b.formatting.prettier.with {
     extra_filetypes = { "astro", "toml" },
-    condition = function(utils)
-      return utils.root_has_file "package.json"
-        or utils.root_has_file ".prettierrc"
-        or utils.root_has_file ".prettierrc.json"
-        or utils.root_has_file ".prettierrc.js"
-    end,
+    -- condition = function(utils)
+    --   return utils.root_has_file "package.json"
+    --     or utils.root_has_file ".prettierrc"
+    --     or utils.root_has_file ".prettierrc.json"
+    --     or utils.root_has_file ".prettierrc.js"
+    -- end,
   }, -- so prettier works only on these filetypes
   b.diagnostics.eslint.with {
     condition = function(utils)
@@ -59,7 +57,9 @@ local sources = {
   b.formatting.isort,
 }
 
-null_ls.setup {
+local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+
+require("null-ls").setup {
   debug = true,
   sources = sources,
   on_attach = function(client, bufnr)

@@ -2,61 +2,45 @@ local overrides = require "custom.configs.overrides"
 
 ---@type NvPluginSpec[]
 local plugins = {
-
   -- Override plugin definition options
-
   {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-      -- format & linting
-      {
-        "jose-elias-alvarez/null-ls.nvim",
-        config = function()
-          require "custom.configs.null-ls"
-        end,
-      },
-      {
-        "ray-x/lsp_signature.nvim",
-        opts = {
-          hint_enable = true, -- disable hints as it will crash in some terminal
-          bind = true, -- This is mandatory, otherwise border config won't get registered.
-          handler_opts = {
-            border = "rounded",
-          },
-        },
+    "ray-x/lsp_signature.nvim",
+    event = "VeryLazy",
+    opts = {
+      hint_enable = true, -- disable hints as it will crash in some terminal
+      bind = true, -- This is mandatory, otherwise border config won't get registered.
+      handler_opts = {
+        border = "rounded",
       },
     },
-    config = function()
-      require "plugins.configs.lspconfig"
-    end, -- Override to setup mason-lspconfig
   },
   {
     "jay-babu/mason-null-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
-    -- dependencies = {
-    --   "williamboman/mason.nvim",
-    --   "jose-elias-alvarez/null-ls.nvim",
-    -- },
-    config = function()
-      local C = require "custom.configs.msn-null-ls"
-      require("mason-null-ls").setup(C)
+    dependencies = {
+      "jose-elias-alvarez/null-ls.nvim",
+      "williamboman/mason.nvim",
+    },
+    opts = {
+      ensure_installed = nil,
+      automatic_installed = true,
+    },
+    config = function(_, opts)
+      require("mason-null-ls").setup(opts)
+      require "custom.configs.null-ls"
     end,
   },
   {
     "williamboman/mason-lspconfig.nvim",
     event = { "BufReadPre", "BufNewFile" },
-    -- dependencies = {
-    --   "williamboman/mason.nvim",
-    --   "neovim/nvim-lspconfig",
-    -- },
-    config = function()
-      local C = require "custom.configs.msn-lspconfig"
-      require("mason-lspconfig").setup(C)
-    end,
+    dependencies = {
+      "williamboman/mason.nvim",
+      "neovim/nvim-lspconfig",
+    },
+    opts = require "custom.configs.mason-lspconfig",
   },
 
   -- override plugin configs
-  -- { "williamboman/mason.nvim", opts = overrides.mason },
   { "nvim-treesitter/nvim-treesitter", opts = overrides.treesitter },
 
   { "nvim-tree/nvim-tree.lua", opts = overrides.nvimtree },
@@ -66,7 +50,12 @@ local plugins = {
     opts = {
       strict = true,
       override_by_filename = {
-        [".eslintignore"] = "eslintrc",
+        [".eslintignore"] = {
+          icon = "",
+          color = "#4b32c3",
+          cterm_color = "56",
+          name = "Eslintrc",
+        },
       },
     },
   },

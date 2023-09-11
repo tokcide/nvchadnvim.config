@@ -2,7 +2,9 @@ local lspconfig = require "lspconfig"
 
 local config = require "plugins.configs.lspconfig"
 
-local on_attach = config.on_attach
+local on_attach = function(client, bufnr)
+  config.on_attach(client, bufnr)
+end
 local capabilities = config.capabilities
 
 return { -- uses lspconfig server names
