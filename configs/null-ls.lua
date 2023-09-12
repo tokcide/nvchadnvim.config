@@ -51,7 +51,7 @@ local sources = {
       local virtual = os.getenv "VIRTUAL_ENV" or os.getenv "CONDA_DEFAULT_ENV" or "/usr"
       return { "--python-executable", virtual .. "/bin/python" }
     end,
-    prefer_local = ".venv/bin/mypy",
+    prefer_local = ".venv/bin",
   },
   b.formatting.black,
   b.formatting.isort,
