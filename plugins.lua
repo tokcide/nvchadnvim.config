@@ -23,11 +23,11 @@ local plugins = {
     },
     opts = {
       ensure_installed = nil,
-      automatic_installed = true,
+      automatic_installation = true,
     },
     config = function(_, opts)
-      require("mason-null-ls").setup(opts)
       require "custom.configs.null-ls"
+      require("mason-null-ls").setup(opts)
     end,
   },
   {
