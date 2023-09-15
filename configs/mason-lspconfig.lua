@@ -51,29 +51,37 @@ return { -- uses lspconfig server names
         }
       end
     end,
-    -- ["lua_ls"] = function()
-    --   lspconfig.lua_ls.setup {
-    --     on_attach = on_attach,
-    --     capabilities = capabilities,
-    --     settings = {
-    --       Lua = {
-    --         diagnostics = {
-    --           globals = { "vim" },
-    --         },
-    --       },
-    --       workspace = {
-    --         library = {
-    --           [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-    --           [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
-    --           [vim.fn.stdpath "data" .. "/lazy/ui/nvchad_types"] = true,
-    --           [vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy"] = true,
-    --         },
-    --         maxPreload = 100000,
-    --         preloadFileSize = 10000,
-    --       },
-    --     },
-    --   }
-    -- end,
+    ["jsonls"] = function(server_name)
+      print(server_name)
+      lspconfig.jsonls.setup {
+        on_attach = on_attach,
+        capabilities = capabilities,
+        settings = {
+          json = {
+            schemas = require("schemastore").json.schemas(),
+            validate = { enable = true },
+          },
+        },
+      }
+    end,
+    ["yamlls"] = function(server_name)
+      lspconfig[server_name].setup {
+        on_attach = on_attach,
+        capabilities = capabilities,
+        settings = {
+          yaml = {
+            schemaStore = {
+              -- You must disable built-in schemaStore support if you want to use
+              -- this plugin and its advanced options like `ignore`.
+              enable = false,
+              -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+              url = "",
+            },
+            schemas = require("schemastore").yaml.schemas(),
+          },
+        },
+      }
+    end,
     ["tsserver"] = function()
       lspconfig.tsserver.setup {
         on_attach = on_attach,
