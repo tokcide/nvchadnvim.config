@@ -2,7 +2,33 @@ local overrides = require "custom.configs.overrides"
 
 ---@type NvPluginSpec[]
 local plugins = {
-  -- Override plugin definition options
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = { "williamboman/mason.nvim" },
+    cmd = { "MasonToolsInstall", "MasonToolsUpdate", "MasonToolsClean" },
+    event = "VeryLazy",
+    opts = require "custom.configs.mason-installer",
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "neovim/nvim-lspconfig",
+    },
+    event = "VeryLazy",
+    opts = require "custom.configs.mason-lspconfig",
+  },
+  {
+    "stevearc/conform.nvim",
+    event = "VeryLazy",
+    cmd = { "ConformInfo" },
+    opts = require "custom.configs.formatting",
+  },
+  {
+    "mfussenegger/nvim-lint",
+    event = { "BufReadPre", "BufNewFile" },
+    config = require "custom.configs.linting",
+  },
   {
     "ray-x/lsp_signature.nvim",
     event = "VeryLazy",
@@ -14,59 +40,15 @@ local plugins = {
       },
     },
   },
-
-  {
-    "williamboman/mason-lspconfig.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "williamboman/mason.nvim",
-      "neovim/nvim-lspconfig",
-    },
-    opts = require "custom.configs.mason-lspconfig",
-  },
   -- override plugin configs
   { "nvim-treesitter/nvim-treesitter", opts = overrides.treesitter },
 
   { "nvim-tree/nvim-tree.lua", opts = overrides.nvimtree },
 
-  {
-    "nvim-tree/nvim-web-devicons",
-    opts = {
-      strict = true,
-      override_by_filename = {
-        [".eslintignore"] = {
-          icon = "",
-          color = "#4b32c3",
-          cterm_color = "56",
-          name = "Eslintrc",
-        },
-      },
-    },
-  },
   -- Install a plugin
   {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
-    config = function()
-      require("better_escape").setup()
-    end,
-  },
-
-  {
-    "jay-babu/mason-null-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "jose-elias-alvarez/null-ls.nvim",
-      "williamboman/mason.nvim",
-    },
-    opts = {
-      ensure_installed = nil,
-      automatic_installation = true,
-    },
-    config = function(_, opts)
-      require "custom.configs.null-ls"
-      require("mason-null-ls").setup(opts)
-    end,
   },
 
   -- To make a plugin not be loaded
@@ -85,8 +67,8 @@ local plugins = {
   {
     "m4xshen/hardtime.nvim",
     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+    event = "VeryLazy",
     opts = {
-      -- Add "oil" to the disabled_filetypes
       disabled_filetypes = { "qf", "netrw", "NvimTree", "lazy", "mason", "oil" },
     },
   },
@@ -97,30 +79,10 @@ local plugins = {
       skipInsignificantPunctuation = true,
     },
   },
-  { "iamcco/markdown-preview.nvim" },
-  { -- This plugin
-    "Zeioth/compiler.nvim",
-    cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
-    dependencies = { "stevearc/overseer.nvim" },
-    opts = {},
-  },
-  { -- The task runner we use
-    "stevearc/overseer.nvim",
-    commit = "19aac0426710c8fc0510e54b7a6466a03a1a7377",
-    cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
-    opts = {
-      task_list = {
-        direction = "bottom",
-        min_height = 25,
-        max_height = 25,
-        default_detail = 1,
-        bindings = {
-          ["q"] = function()
-            vim.cmd "OverseerClose"
-          end,
-        },
-      },
-    },
+  {
+    "iamcco/markdown-preview.nvim",
+    build = "cd app && npm install",
+    ft = "markdown",
   },
   {
     "nvimdev/lspsaga.nvim",
