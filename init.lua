@@ -1,8 +1,21 @@
 local autocmd = vim.api.nvim_create_autocmd
 local fn = vim.fn
 
+vim.opt.relativenumber = true
+vim.g.editorconfig = true
+vim.g.python_recommended_style = false
+
 -- vscode format i.e json files
 -- vim.g.vscode_snippets_path = "./snippets"
+
+--vim.opt_global.expandtab = true
+--vim.opt_global.autoindent = true
+--vim.opt_global.smarttab = true
+--vim.opt_global.shiftwidth = 2
+--vim.opt_global.tabstop = 2
+-- vim.opt_local.softtabstop = 4
+-- vim.opt_local.fileformat = "unix"
+-- vim.opt_local.textwidth = 80
 
 -- Auto resize panes when resizing nvim window
 autocmd("VimResized", {
@@ -10,8 +23,15 @@ autocmd("VimResized", {
   command = "tabdo wincmd =",
 })
 
+-- -- Set indentation to 2 spaces
+-- vim.api.nvim_create_augroup("setIndent", { clear = true })
+-- vim.api.nvim_create_autocmd("FileType", {
+--   group = "setIndent",
+--   pattern = { "python" },
+--   command = "set stabstop=2 shiftwidth=2",
+-- })
+--
 vim.api.nvim_create_augroup("bufcheck", { clear = true })
-
 -- reload config file on change
 vim.api.nvim_create_autocmd("BufWritePost", {
   group = "bufcheck",
@@ -75,10 +95,10 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 -- Spider mappings
-vim.keymap.set({ "n", "o", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>", { desc = "Spider-w" })
-vim.keymap.set({ "n", "o", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>", { desc = "Spider-e" })
-vim.keymap.set({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc = "Spider-b" })
-vim.keymap.set({ "n", "o", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>", { desc = "Spider-ge" })
+-- vim.keymap.set({ "n", "o", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>", { desc = "Spider-w" })
+-- vim.keymap.set({ "n", "o", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>", { desc = "Spider-e" })
+-- vim.keymap.set({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc = "Spider-b" })
+-- vim.keymap.set({ "n", "o", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>", { desc = "Spider-ge" })
 
 -- Open compiler
 vim.api.nvim_buf_set_keymap(0, "n", "<F6>", "<cmd>CompilerOpen<cr>", { noremap = true, silent = true })
