@@ -52,8 +52,7 @@ return { -- uses lspconfig server names
       end
     end,
     ["jsonls"] = function(server_name)
-      print(server_name)
-      lspconfig.jsonls.setup {
+      lspconfig[server_name].setup {
         on_attach = on_attach,
         capabilities = capabilities,
         settings = {
@@ -82,8 +81,8 @@ return { -- uses lspconfig server names
         },
       }
     end,
-    ["tsserver"] = function()
-      lspconfig.tsserver.setup {
+    ["tsserver"] = function(server_name)
+      lspconfig[server_name].setup {
         on_attach = on_attach,
         capabilities = capabilities,
         init_options = {
