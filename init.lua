@@ -3,19 +3,6 @@ local fn = vim.fn
 
 vim.opt.relativenumber = true
 vim.g.editorconfig = true
-vim.g.python_recommended_style = false
-
--- vscode format i.e json files
--- vim.g.vscode_snippets_path = "./snippets"
-
---vim.opt_global.expandtab = true
---vim.opt_global.autoindent = true
---vim.opt_global.smarttab = true
---vim.opt_global.shiftwidth = 2
---vim.opt_global.tabstop = 2
--- vim.opt_local.softtabstop = 4
--- vim.opt_local.fileformat = "unix"
--- vim.opt_local.textwidth = 80
 
 -- Auto resize panes when resizing nvim window
 autocmd("VimResized", {
