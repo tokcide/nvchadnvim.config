@@ -2,6 +2,7 @@ local overrides = require "custom.configs.overrides"
 
 ---@type NvPluginSpec[]
 local plugins = {
+  -- LSP plugins
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     dependencies = { "williamboman/mason.nvim" },
@@ -11,11 +12,12 @@ local plugins = {
   },
   {
     "williamboman/mason-lspconfig.nvim",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "williamboman/mason.nvim",
       "neovim/nvim-lspconfig",
+      "b0o/schemastore.nvim",
     },
-    event = "VeryLazy",
     opts = require "custom.configs.mason-lspconfig",
   },
   {
@@ -45,38 +47,37 @@ local plugins = {
 
   { "nvim-tree/nvim-tree.lua", opts = overrides.nvimtree },
 
-  -- Install a plugin
+  -- To make a plugin not be loaded
+  {
+    "nvchad/nvim-colorizer.lua",
+    enabled = false,
+  },
+  -- KEYMAP plugins
   {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
-  },
-
-  -- To make a plugin not be loaded
-  {
-    "NvChad/nvim-colorizer.lua",
-    enabled = false,
-  },
-
-  -- All NvChad plugins are lazy-loaded by default
-  -- For a plugin to be loaded, you will need to set either `ft`, `cmd`, `keys`, `event`, or set `lazy = false`
-  -- If you want a plugin to load on startup, add `lazy = false` to a plugin spec, for example
-  -- {
-  --   "mg979/vim-visual-multi",
-  --   lazy = false,
-  -- }
-  {
-    "m4xshen/hardtime.nvim",
-    dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-    event = "VeryLazy",
-    opts = {
-      disabled_filetypes = { "qf", "netrw", "NvimTree", "lazy", "mason", "oil" },
-    },
+    config = function()
+      require("better_escape").setup()
+    end,
   },
   {
     "chrisgrieser/nvim-spider",
     lazy = true,
     opts = {
       skipInsignificantPunctuation = true,
+    },
+  },
+  {
+    "booperlv/nvim-gomove",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = { -- whether or not to map default key bindings, (true/false)
+      map_defaults = true,
+      -- whether or not to reindent lines moved vertically (true/false)
+      reindent = true,
+      -- whether or not to undojoin same direction moves (true/false)
+      undojoin = true,
+      -- whether to not to move past end column when moving blocks horizontally, (true/false)
+      move_past_end_col = false,
     },
   },
   {
@@ -94,48 +95,22 @@ local plugins = {
     opts = require "custom.configs.lspsaga",
   },
   {
-    "Dhanus3133/LeetBuddy.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
-    },
-    config = function()
-      require("leetbuddy").setup {}
+    "aspeddro/gitui.nvim",
+    event = "VeryLazy",
+    config = function(_, opts)
+      require("gitui").setup(opts)
     end,
     keys = {
-      { "<leader>lq", "<cmd>LBQuestions<cr>", desc = "List Questions" },
-      { "<leader>ll", "<cmd>LBQuestion<cr>", desc = "View Question" },
-      { "<leader>lr", "<cmd>LBReset<cr>", desc = "Reset Code" },
-      { "<leader>lt", "<cmd>LBTest<cr>", desc = "Run Code" },
-      { "<leader>ls", "<cmd>LBSubmit<cr>", desc = "Submit Code" },
+      {
+        "<leader>gg",
+        function(_, keys)
+          require("gitui").open()
+        end,
+        desc = "View GitUi window",
+      },
     },
   },
-  {
-    "booperlv/nvim-gomove",
-    event = { "BufReadPre", "BufNewFile" },
-    opts = { -- whether or not to map default key bindings, (true/false)
-      map_defaults = true,
-      -- whether or not to reindent lines moved vertically (true/false)
-      reindent = true,
-      -- whether or not to undojoin same direction moves (true/false)
-      undojoin = true,
-      -- whether to not to move past end column when moving blocks horizontally, (true/false)
-      move_past_end_col = false,
-    },
-  },
-  {
-    "kdheepak/lazygit.nvim",
-    -- optional for floating window border decoration
-    dependencies = {
-      "nvim-telescope/telescope.nvim",
-      "nvim-lua/plenary.nvim",
-    },
-    config = function()
-      require("telescope").load_extension "lazygit"
-    end,
-  },
-
-  { "b0o/schemastore.nvim" },
+  { "stevearc/dressing.nvim", event = "VeryLazy" },
   { "ThePrimeagen/vim-be-good", cmd = { "VimBeGood" } },
 }
 
