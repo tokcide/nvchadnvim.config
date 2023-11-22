@@ -20,6 +20,7 @@ return {
   ensure_installed = {
     "prettier",
     "stylua",
+    "shfmt",
     "isort",
     "black",
     "pylint",
