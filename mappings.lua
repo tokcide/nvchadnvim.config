@@ -7,7 +7,6 @@ local spider_bindings = {
   ["b"] = { "<cmd>lua require('spider').motion('b')<CR>", "Spider-b" },
   ["ge"] = { "<cmd>lua require('spider').motion('ge')<CR>", "Spider-ge" },
 }
-
 -- In order to disable a default keymap, use
 M.disabled = {
   n = {

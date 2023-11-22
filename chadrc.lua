@@ -31,15 +31,15 @@ M.ui = {
   },
 
   cheatsheet = {
-    theme = "simple",
+    theme = "grid",
   },
 
   statusline = {
-    theme = "minimal", -- default/vscode/vscode_colored/minimal
+    theme = "default", -- default/vscode/vscode_colored/minimal
 
     -- default/round/block/arrow (separators work only for "default" statusline theme;
     -- round and block will work for the minimal theme only)
-    separator_style = "round",
+    separator_style = "default",
     overriden_modules = nil,
   },
 
