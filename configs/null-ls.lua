@@ -13,45 +13,39 @@ local sources = {
   },
   -- bash
   b.formatting.shfmt,
-  b.code_actions.shellcheck.with {
-    diagnostic_config = {
-      -- see :help vim.diagnostic.config()
-      underline = true,
-      virtual_text = false,
-      signs = true,
-      update_in_insert = false,
-      severity_sort = true,
-    },
-    -- will show code and source name
-    diagnostics_format = "[#{c}] #{m} (#{s})",
-  },
+  -- b.code_actions.shellcheck.with {
+  --   diagnostic_config = {
+  --     -- see :help vim.diagnostic.config()
+  --     underline = true,
+  --     virtual_text = false,
+  --     signs = true,
+  --     update_in_insert = false,
+  --     severity_sort = true,
+  --   },
+  --   -- will show code and source name
+  --   diagnostics_format = "[#{c}] #{m} (#{s})",
+  -- },
   -- webdev
   b.formatting.prettier.with {
     extra_filetypes = { "astro", "toml" },
-    -- condition = function(utils)
-    --   return utils.root_has_file "package.json"
-    --     or utils.root_has_file ".prettierrc"
-    --     or utils.root_has_file ".prettierrc.json"
-    --     or utils.root_has_file ".prettierrc.js"
-    -- end,
-  }, -- so prettier works only on these filetypes
-  b.diagnostics.eslint.with {
-    condition = function(utils)
-      return utils.root_has_file "package.json"
-        or utils.root_has_file ".eslintrc.json"
-        or utils.root_has_file ".eslintrc.js"
-    end,
-    filter = function(diagnostic)
-      return diagnostic.code ~= "prettier/prettier"
-    end,
   },
+  -- b.diagnostics.eslint.with {
+  --   condition = function(utils)
+  --     return utils.root_has_file "package.json"
+  --       or utils.root_has_file ".eslintrc.json"
+  --       or utils.root_has_file ".eslintrc.js"
+  --   end,
+  --   filter = function(diagnostic)
+  --     return diagnostic.code ~= "prettier/prettier"
+  --   end,
+  -- },
   -- python
   b.diagnostics.mypy.with {
-    extra_args = function()
-      local virtual = os.getenv "VIRTUAL_ENV" or os.getenv "CONDA_DEFAULT_ENV" or "/usr"
-      return { "--python-executable", virtual .. "/bin/python" }
-    end,
-    prefer_local = ".venv/bin",
+    -- extra_args = function()
+    --   local virtual = os.getenv "VIRTUAL_ENV" or os.getenv "CONDA_DEFAULT_ENV" or "/usr"
+    --   return { "--python-executable", virtual .. "/bin/python" }
+    -- end,
+    only_local = ".venv/bin/",
   },
   b.formatting.black,
   b.formatting.isort,

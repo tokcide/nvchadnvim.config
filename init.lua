@@ -1,8 +1,19 @@
 local autocmd = vim.api.nvim_create_autocmd
 local fn = vim.fn
 
+-- vim.o.shell = "zsh"
+
 vim.opt.relativenumber = true
 vim.g.editorconfig = true
+
+vim.cmd "set expandtab"
+vim.cmd "set tabstop=2"
+vim.cmd "set softtabstop=2"
+vim.cmd "set shiftwidth=2"
+vim.cmd "autocmd BufNewFile,BufRead *.toml.tmpl set filetype=toml"
+vim.cmd "autocmd BufNewFile,BufRead *.sh.tmpl set filetype=sh"
+
+-- vim.cmd 'autocmd BufWritePost ~/.local/share/chezmoi/* ! chezmoi apply --source-path "%"'
 
 -- Auto resize panes when resizing nvim window
 autocmd("VimResized", {
